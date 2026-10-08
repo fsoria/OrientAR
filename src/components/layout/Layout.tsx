@@ -7,7 +7,7 @@ export function Layout() {
     <div className="flex min-h-dvh justify-center bg-violet-50 md:bg-violet-100 p-0 md:p-4 font-sans">
       <div className="shell flex flex-col">
         <Header />
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto pb-2">
           <Outlet />
         </main>
         <Footer />

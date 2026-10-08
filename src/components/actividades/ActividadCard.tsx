@@ -25,34 +25,34 @@ export function ActividadCard({
   return (
     <article className="overflow-hidden rounded-2xl border border-violet-100 bg-white shadow-sm">
       <div className="flex">
-        <div className="flex w-16 shrink-0 items-center justify-center bg-violet-100 text-3xl">
+        <div className="flex w-14 shrink-0 items-center justify-center bg-violet-50 text-2xl">
           {emoji}
         </div>
-        <div className="min-w-0 flex-1 p-3">
+        <div className="min-w-0 flex-1 px-3 py-2.5">
           <div className="flex items-start gap-2">
-            <div className="min-w-0">
-              <p className="truncate text-sm font-bold leading-tight text-stone-900">
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-[13px] font-bold leading-tight text-stone-900">
                 {actividad.nombre}
               </p>
-              <span className="mt-1 inline-block rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-semibold text-violet-700">
+              <span className="mt-0.5 inline-block rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-semibold text-violet-700">
                 {actividad.categoria}
               </span>
             </div>
             {score !== null && (
               <div
-                className={`ml-auto shrink-0 rounded-full px-2 py-1 text-xs font-bold text-white ${afinColor(score)}`}
+                className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-bold text-white ${afinColor(score)}`}
               >
                 {score}%
               </div>
             )}
           </div>
-          <div className="mt-2 flex items-center gap-3 text-[11px] text-stone-500">
-            <span className="flex items-center gap-1">
-              <Star size={12} className="fill-amber-400 text-amber-400" />
+          <div className="mt-1.5 flex items-center gap-3 text-[11px] text-stone-500">
+            <span className="flex items-center gap-0.5">
+              <Star size={11} className="fill-amber-400 text-amber-400" />
               {actividad.rating.toFixed(1)}
             </span>
-            <span className="flex items-center gap-1">
-              <MapPin size={12} />
+            <span className="flex items-center gap-0.5">
+              <MapPin size={11} />
               {actividad.zona}
             </span>
             <span className="font-semibold text-stone-600">{actividad.precioNivel}</span>
@@ -60,8 +60,10 @@ export function ActividadCard({
         </div>
       </div>
 
-      <div className="-mt-1 px-3 pb-3">
-        <p className="mb-2 line-clamp-2 text-xs text-stone-500">{actividad.descripcion}</p>
+      <div className="px-3 pb-3">
+        <p className="mb-2 line-clamp-2 text-xs leading-relaxed text-stone-500">
+          {actividad.descripcion}
+        </p>
         {afinidad && !afinidad.excluido && afinidad.motivos.length > 0 && (
           <p className="mb-2 text-[11px] text-violet-600">
             · {afinidad.motivos[0]?.label}
@@ -70,19 +72,19 @@ export function ActividadCard({
         <div className="flex gap-2">
           <Link
             to={`/actividades/${actividad.slug}`}
-            className="flex-1 rounded-lg bg-violet-700 py-2 text-center text-xs font-semibold text-white"
+            className="flex-1 rounded-xl bg-violet-700 py-2.5 text-center text-xs font-semibold text-white active:scale-[0.98] transition-transform"
           >
             Ver y contactar
           </Link>
           <button
             type="button"
             onClick={() => toggle(actividad.id, 'actividad')}
-            className={`flex w-9 items-center justify-center rounded-lg border border-violet-200 ${
-              fav ? 'bg-rose-50 text-rose-500' : 'text-rose-400'
+            className={`flex w-10 items-center justify-center rounded-xl border border-violet-200 transition-colors ${
+              fav ? 'bg-rose-50 text-rose-500' : 'text-stone-400'
             }`}
             aria-label={fav ? 'Quitar de favoritos' : 'Guardar'}
           >
-            <Heart size={15} fill={fav ? 'currentColor' : 'none'} />
+            <Heart size={16} fill={fav ? 'currentColor' : 'none'} />
           </button>
         </div>
       </div>

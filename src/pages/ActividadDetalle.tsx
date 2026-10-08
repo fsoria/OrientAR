@@ -102,13 +102,13 @@ export function ActividadDetalle() {
             phone={item.contacto.whatsapp || item.contacto.tel}
             itemName={item.nombre}
             childName={perfil?.nombre}
-            className="flex-1"
+            className="flex-1 !rounded-xl !py-3"
           />
           <button
             type="button"
             onClick={() => toggle(item.id, 'actividad')}
-            className={`rounded-lg border border-violet-200 px-3 text-sm ${
-              fav ? 'bg-rose-50 text-rose-500' : 'text-rose-400'
+            className={`flex w-12 items-center justify-center rounded-xl border border-violet-200 text-lg transition-colors ${
+              fav ? 'bg-rose-50 text-rose-500' : 'text-stone-400'
             }`}
           >
             {fav ? '♥' : '♡'}

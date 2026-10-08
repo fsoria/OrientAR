@@ -16,6 +16,8 @@
     font-family: var(--font-sans);
     color: #1c1917;
     background: #f5f3ff; /* violet-50, matches shell */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
   }
 
   #root {

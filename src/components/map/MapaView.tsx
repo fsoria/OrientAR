@@ -108,7 +108,7 @@ export function MapaView({
                   <strong>{pin.item.nombre}</strong>
                   <div className="mt-1 text-xs opacity-80">{pin.item.zona}</div>
                   <Link
-                    className="mt-2 inline-block font-semibold text-teal"
+                    className="mt-2 inline-block font-semibold text-violet-700"
                     to={
                       pin.tipo === 'actividad'
                         ? `/actividades/${pin.item.slug}`
