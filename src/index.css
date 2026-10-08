@@ -15,7 +15,7 @@
     min-height: 100dvh;
     font-family: var(--font-sans);
     color: #1c1917;
-    background: #ede9fe; /* violet-100 */
+    background: #f5f3ff; /* violet-50, matches shell */
   }
 
   #root {
@@ -37,12 +37,10 @@
 
 @layer components {
   .shell {
-    width: min(100%, 430px);
+    width: 100%;
     margin-inline: auto;
     min-height: 100dvh;
     background: #f5f3ff; /* violet-50 */
-    border-inline: 4px solid #2e1065; /* violet-950 */
-    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   }
 
   @media (min-width: 768px) {
@@ -53,6 +51,7 @@
       max-height: calc(100dvh - 2rem);
       border-radius: 1.5rem;
       border: 4px solid #2e1065;
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
       overflow: hidden;
     }
   }
