@@ -1,0 +1,138 @@
+@import 'tailwindcss';
+@import 'leaflet/dist/leaflet.css';
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    font-family: var(--font-sans);
+    color: #1c1917;
+    background: #ede9fe; /* violet-100 */
+  }
+
+  #root {
+    min-height: 100dvh;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+}
+
+@layer components {
+  .shell {
+    width: min(100%, 430px);
+    margin-inline: auto;
+    min-height: 100dvh;
+    background: #f5f3ff; /* violet-50 */
+    border-inline: 4px solid #2e1065; /* violet-950 */
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  }
+
+  @media (min-width: 768px) {
+    .shell {
+      width: min(100%, 420px);
+      margin-block: 1rem;
+      min-height: calc(100dvh - 2rem);
+      max-height: calc(100dvh - 2rem);
+      border-radius: 1.5rem;
+      border: 4px solid #2e1065;
+      overflow: hidden;
+    }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    padding: 0.55rem 0.9rem;
+    font-weight: 600;
+    font-size: 0.75rem;
+    transition: transform 0.12s ease, background 0.15s ease;
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .btn-primary {
+    background: #6d28d9; /* violet-700 */
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: #5b21b6;
+  }
+
+  .btn-secondary {
+    background: white;
+    color: #6d28d9;
+    border: 1px solid #ddd6fe; /* violet-200 */
+  }
+
+  .btn-gradient {
+    background: linear-gradient(to right, #7c3aed, #f43f5e);
+    color: white;
+    font-weight: 700;
+    border-radius: 0.75rem;
+    padding: 0.9rem 1rem;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 14px rgb(124 58 237 / 0.25);
+  }
+
+  .btn-whatsapp {
+    background: #6d28d9;
+    color: white;
+  }
+
+  .chip {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.625rem;
+    font-weight: 600;
+    background: #ede9fe;
+    color: #6d28d9;
+  }
+
+  .card-soft {
+    background: white;
+    border: 1px solid #ede9fe; /* violet-100 */
+    border-radius: 1rem;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+    overflow: hidden;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #78716c;
+  }
+
+  .leaflet-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.75rem;
+    z-index: 0;
+  }
+}

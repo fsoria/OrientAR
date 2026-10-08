@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OrientAR · Maqueta</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'] },
+        },
+      },
+    }
+  </script>
+  <style>
+    body { font-family: ui-sans-serif, system-ui, sans-serif; }
+    .phone {
+      width: 100%;
+      max-width: 384px;
+      height: min(780px, 92vh);
+    }
+    .hide-scroll::-webkit-scrollbar { width: 0; height: 0; }
+  </style>
+</head>
+<body class="min-h-screen bg-violet-100 p-4 font-sans">
+  <div class="mx-auto mb-4 max-w-md text-center">
+    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-violet-700">Maqueta compartible</p>
+    <h1 class="mt-1 text-2xl font-extrabold text-violet-950">OrientAR</h1>
+    <p class="mt-1 text-sm text-stone-600">Actividades y colegios que van con tu hijo · Salta</p>
+  </div>
+
+  <div class="flex justify-center">
+    <div class="phone flex flex-col overflow-hidden rounded-3xl border-4 border-violet-950 bg-violet-50 shadow-2xl">
+      <!-- status -->
+      <div class="flex items-center justify-between bg-violet-950 px-5 py-1.5 text-xs text-violet-200">
+        <span class="font-mono">9:41</span>
+        <span class="tracking-widest font-semibold">orientar</span>
+        <span class="font-mono">100%</span>
+      </div>
+
+      <!-- VISTA TEST -->
+      <div id="vista-test" class="hidden flex-1 overflow-y-auto hide-scroll">
+        <div class="bg-gradient-to-br from-violet-600 to-rose-500 px-5 pb-6 pt-4 text-white">
+          <button onclick="mostrar('resultados')" class="mb-3 flex items-center gap-1 text-xs text-violet-100">← Volver</button>
+          <p class="text-xs text-violet-100">Configurá una vez</p>
+          <h2 class="text-2xl font-extrabold leading-tight">Contanos sobre<br />tu hijo</h2>
+          <p class="mt-1 text-sm text-violet-100">Con esto le recomendamos actividades que de verdad le van.</p>
+        </div>
+
+        <div class="space-y-5 px-5 py-4">
+          <div>
+            <p class="mb-2 text-xs font-bold uppercase tracking-wide text-stone-500">Nombre y edad</p>
+            <div class="flex gap-2">
+              <input id="nombre" value="Mateo" class="flex-1 rounded-xl border border-violet-200 bg-white px-3 py-2 text-sm" />
+              <input id="edad" value="9" type="number" class="w-20 rounded-xl border border-violet-200 bg-white px-3 py-2 text-sm" />
+            </div>
+          </div>
+
+          <div>
+            <p class="mb-2 text-xs font-bold uppercase tracking-wide text-stone-500">¿Qué le gusta?</p>
+            <div id="intereses" class="flex flex-wrap gap-2"></div>
+          </div>
+
+          <div>
+            <p class="mb-2 text-xs font-bold uppercase tracking-wide text-stone-500">¿Cómo le gusta jugar?</p>
+            <div class="grid grid-cols-3 gap-1 rounded-xl bg-violet-100 p-1" id="modos"></div>
+          </div>
+
+          <div>
+            <p class="mb-2 text-xs font-bold uppercase tracking-wide text-stone-500">Energía</p>
+            <div class="grid grid-cols-2 gap-1 rounded-xl bg-violet-100 p-1" id="energias"></div>
+          </div>
+
+          <button onclick="aplicarPerfil()" class="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-rose-500 py-3.5 text-sm font-bold text-white shadow active:scale-95 transition">
+            ✨ Ver recomendaciones
+          </button>
+        </div>
+      </div>
+
+      <!-- VISTA RESULTADOS -->
+      <div id="vista-resultados" class="flex flex-1 flex-col overflow-hidden">
+        <div class="bg-gradient-to-br from-violet-600 to-rose-500 px-5 pb-5 pt-4 text-white">
+          <div class="mb-2 flex items-center gap-1.5 text-xs text-violet-100">✨ Recomendado para</div>
+          <button onclick="mostrar('test')" class="flex w-full items-center gap-3 rounded-2xl bg-white/15 px-3 py-2.5 transition hover:bg-white/25">
+            <div id="avatar" class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-xl font-bold text-violet-700">M</div>
+            <div class="min-w-0 text-left">
+              <p id="perfil-titulo" class="leading-tight font-bold">Mateo · 9 años</p>
+              <p id="perfil-sub" class="truncate text-xs text-violet-100">Deporte · Ciencia · Idiomas</p>
+            </div>
+            <span class="ml-auto whitespace-nowrap rounded-full bg-white/20 px-2 py-1 text-xs">Editar</span>
+          </button>
+        </div>
+
+        <div class="bg-violet-50 px-5 pb-2 pt-3">
+          <div class="flex items-center gap-2 rounded-xl border border-violet-200 bg-white px-3 py-2 text-sm text-stone-400">
+            🔍 Buscar actividad en Salta
+          </div>
+          <div id="filtros" class="mt-3 flex gap-2 overflow-x-auto pb-1"></div>
+        </div>
+
+        <div id="feed" class="hide-scroll flex-1 space-y-3 overflow-y-auto px-5 pb-5"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-auto mt-6 max-w-md rounded-2xl border border-violet-200 bg-white/80 p-4 text-left text-sm text-stone-600">
+    <p class="font-bold text-violet-900">Cómo compartir esta maqueta</p>
+    <ol class="mt-2 list-decimal space-y-1 pl-5 text-xs">
+      <li>Abrí este archivo en Chrome / Edge (doble click).</li>
+      <li>Enviá el archivo <code class="rounded bg-violet-100 px-1">OrientAR-maqueta.html</code> por WhatsApp, Drive o mail.</li>
+      <li>También podés sacar capturas del teléfono simulado.</li>
+    </ol>
+    <p class="mt-3 text-[11px] text-stone-400">Maqueta interactiva · no es la app en producción · datos ficticios de Salta</p>
+  </div>
+
+  <script>
+    const ACTIVIDADES = [
+      { n: 'Talkland Idiomas', cat: 'Idiomas', emoji: '🗣️', zona: 'Centro', rating: 4.8, precio: '$$', afin: 96, desc: 'Inglés para chicos con juegos y grupos por edad.' },
+      { n: 'Club de Natación Los Sauces', cat: 'Deporte', emoji: '🏊', zona: 'Tres Cerritos', rating: 4.6, precio: '$$', afin: 92, desc: 'Natación desde los 4 años, pileta climatizada.' },
+      { n: 'Escuela de Fútbol Cerro Verde', cat: 'Deporte', emoji: '⚽', zona: 'Zona Norte', rating: 4.7, precio: '$', afin: 90, desc: 'Fútbol formativo, categorías 2013 a 2018.' },
+      { n: 'LabKids Robótica', cat: 'Ciencia', emoji: '🤖', zona: 'Centro', rating: 4.9, precio: '$$$', afin: 88, desc: 'Robótica y programación con kits por nivel.' },
+      { n: 'Estudio de Danza Aramí', cat: 'Arte', emoji: '🩰', zona: 'Ciudad del Milagro', rating: 4.5, precio: '$$', afin: 84, desc: 'Danza clásica y contemporánea para niñas y niños.' },
+      { n: 'Ajedrez Club Norte', cat: 'Ciencia', emoji: '♟️', zona: 'Grand Bourg', rating: 4.8, precio: '$', afin: 82, desc: 'Ajedrez desde cero, clases y torneos internos.' },
+      { n: 'Escuela de Música Clave de Sol', cat: 'Arte', emoji: '🎸', zona: 'Centro', rating: 4.7, precio: '$$', afin: 80, desc: 'Guitarra, piano y batería para principiantes.' },
+      { n: 'Taller de Arte Pincel', cat: 'Arte', emoji: '🎨', zona: 'San Lorenzo', rating: 4.6, precio: '$$', afin: 78, desc: 'Dibujo y pintura, grupos reducidos.' },
+      { n: 'Vóley Juvenil Salta', cat: 'Deporte', emoji: '🏐', zona: 'Limache', rating: 4.4, precio: '$', afin: 74, desc: 'Vóley formativo mixto, dos veces por semana.' },
+      { n: 'Teatro Candilejas', cat: 'Arte', emoji: '🎭', zona: 'Centro', rating: 4.9, precio: '$$', afin: 70, desc: 'Teatro y expresión para chicos tímidos y no tanto.' },
+    ];
+
+    const FILTROS = ['Todas', 'Deporte', 'Arte', 'Idiomas', 'Ciencia'];
+    const INTERESES = ['Deporte', 'Arte', 'Música', 'Idiomas', 'Ciencia', 'Tecnología', 'Danza'];
+
+    let filtro = 'Todas';
+    let sel = ['Deporte', 'Ciencia', 'Idiomas'];
+    let modo = 'En equipo';
+    let energia = 'Activa';
+
+    function afinColor(v) {
+      if (v >= 90) return 'bg-green-500';
+      if (v >= 80) return 'bg-violet-500';
+      return 'bg-rose-400';
+    }
+
+    function mostrar(vista) {
+      document.getElementById('vista-test').classList.toggle('hidden', vista !== 'test');
+      document.getElementById('vista-resultados').classList.toggle('hidden', vista !== 'resultados');
+      if (vista === 'test') renderTest();
+      if (vista === 'resultados') renderFeed();
+    }
+
+    function renderFiltros() {
+      document.getElementById('filtros').innerHTML = FILTROS.map((f) => `
+        <button onclick="setFiltro('${f}')"
+          class="px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition ${
+            filtro === f ? 'bg-violet-700 text-white' : 'bg-white text-violet-700 border border-violet-200'
+          }">${f}</button>
+      `).join('');
+    }
+
+    function setFiltro(f) {
+      filtro = f;
+      renderFiltros();
+      renderFeed();
+    }
+
+    function renderFeed() {
+      renderFiltros();
+      const lista = ACTIVIDADES.filter((a) => filtro === 'Todas' || a.cat === filtro);
+      const nombre = document.getElementById('nombre')?.value || 'Mateo';
+      document.getElementById('feed').innerHTML = lista.map((a) => `
+        <div class="bg-white rounded-2xl border border-violet-100 shadow-sm overflow-hidden">
+          <div class="flex">
+            <div class="w-16 shrink-0 bg-violet-100 flex items-center justify-center text-3xl">${a.emoji}</div>
+            <div class="flex-1 p-3 min-w-0">
+              <div class="flex items-start gap-2">
+                <div class="min-w-0">
+                  <p class="font-bold text-stone-900 text-sm leading-tight truncate">${a.n}</p>
+                  <span class="inline-block mt-1 text-[10px] font-semibold text-violet-700 bg-violet-100 px-2 py-0.5 rounded-full">${a.cat}</span>
+                </div>
+                <div class="ml-auto shrink-0 text-white text-xs font-bold px-2 py-1 rounded-full ${afinColor(a.afin)}">${a.afin}%</div>
+              </div>
+              <div class="flex items-center gap-3 mt-2 text-[11px] text-stone-500">
+                <span>★ ${a.rating}</span>
+                <span>📍 ${a.zona}</span>
+                <span class="font-semibold text-stone-600">${a.precio}</span>
+              </div>
+            </div>
+          </div>
+          <div class="px-3 pb-3 -mt-1">
+            <p class="text-xs text-stone-500 mb-2">${a.desc}</p>
+            <div class="flex gap-2">
+              <button class="flex-1 bg-violet-700 text-white text-xs font-semibold py-2 rounded-lg">Ver y contactar</button>
+              <button class="w-9 rounded-lg border border-violet-200 text-rose-400 flex items-center justify-center">♥</button>
+            </div>
+          </div>
+        </div>
+      `).join('') + `<p class="text-center text-[11px] text-stone-400 pt-1">Afinidad calculada según el perfil de ${nombre}</p>`;
+    }
+
+    function renderTest() {
+      document.getElementById('intereses').innerHTML = INTERESES.map((i) => {
+        const on = sel.includes(i);
+        return `<button onclick="toggleInteres('${i}')"
+          class="text-xs px-3 py-1.5 rounded-full font-medium border transition ${
+            on ? 'bg-violet-700 text-white border-violet-700' : 'bg-white text-stone-600 border-violet-200'
+          }">${on ? '✓ ' : ''}${i}</button>`;
+      }).join('');
+
+      document.getElementById('modos').innerHTML = ['Solo', 'En equipo', 'Las dos'].map((o) => `
+        <button onclick="modo='${o}'; renderTest()"
+          class="py-2 rounded-lg text-xs font-semibold transition ${modo === o ? 'bg-white text-violet-700 shadow-sm' : 'text-violet-500'}">${o}</button>
+      `).join('');
+
+      document.getElementById('energias').innerHTML = ['Tranquila', 'Activa'].map((o) => `
+        <button onclick="energia='${o}'; renderTest()"
+          class="py-2 rounded-lg text-xs font-semibold transition ${energia === o ? 'bg-white text-violet-700 shadow-sm' : 'text-violet-500'}">${o}</button>
+      `).join('');
+    }
+
+    function toggleInteres(i) {
+      sel = sel.includes(i) ? sel.filter((x) => x !== i) : [...sel, i];
+      renderTest();
+    }
+
+    function aplicarPerfil() {
+      const nombre = document.getElementById('nombre').value || 'Mateo';
+      const edad = document.getElementById('edad').value || '9';
+      document.getElementById('avatar').textContent = nombre.trim().charAt(0).toUpperCase() || 'M';
+      document.getElementById('perfil-titulo').textContent = `${nombre} · ${edad} años`;
+      document.getElementById('perfil-sub').textContent = (sel.slice(0, 3).join(' · ') || 'Sin intereses');
+      mostrar('resultados');
+    }
+
+    mostrar('resultados');
+  </script>
+</body>
+</html>
