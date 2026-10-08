@@ -52,7 +52,7 @@ export function Colegios() {
         </div>
       </div>
 
-      <div className="space-y-3 px-5 pb-5">
+      <div className="space-y-3 px-4 pt-4 pb-5">
         {loading && <p className="text-sm text-stone-500">Cargando...</p>}
         {error && <p className="text-sm text-rose-500">{error}</p>}
         {!loading && list.map((c) => <ColegioCard key={c.id} colegio={c} />)}
